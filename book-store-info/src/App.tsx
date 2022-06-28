@@ -1,55 +1,40 @@
-import React, {useState, useEffect} from 'react';
-import logo from './logo.svg';
+import React, {useEffect} from 'react';
 import './App.css';
-import BookStoreList, {BookStoreListProps} from './Components/BookStoreList'
+import { useDispatch} from "react-redux";
+import {getBookStoreInfo} from "./State/bookStoreInfoSlice"
+import {AppDispatch} from "./State/store"
 
-interface bookStoreState {
-  bookStoreList : BookStoreListProps
-}
 
-const defaultState  = {
-  bookStoreList :{
-    data : [],
-    included : []
-  }
-}
+import BookStoreList from './Components/BookStoreList'
+import { createUseStyles } from 'react-jss';
 
 function App() {
 
-  const [info, setInfo] = useState(defaultState as bookStoreState)
+  const styles = createUseStyles({ 
+    outerDiv : {
+      display : "flex",
+      justifyContent : "center",
+      alignItems :"center"
+    }
+  })
 
-  const loadInfo = () => {
-    return fetch('http://localhost:3000/stores').then(data => {
-      return data.json()
-    }).then(jsonData => {
-      // console.log(jsonData)
-      setInfo({
-        bookStoreList : {
-          data : jsonData["data"],
-          included : jsonData["included"]
-        }
-      })
-    }).catch(error => {
-      console.log(error)
-    })
-  }
+
+  const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
-    loadInfo()
+    dispatch(getBookStoreInfo())
 
-  }, [])
+  },[dispatch])
+
+  const classes = styles()
 
  
 
 
   return (
     <div className="App">
-      <div>
-        <BookStoreList
-        data = {info.bookStoreList["data"]}
-        included = {info.bookStoreList["included"]}
-        ></BookStoreList>
-
+      <div className={classes.outerDiv}>
+        <BookStoreList></BookStoreList> 
       </div>
     </div>
   );

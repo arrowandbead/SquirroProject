@@ -1,34 +1,49 @@
 import React, {useEffect} from 'react';
 import { createUseStyles } from 'react-jss';
 import BookStorePanel from './BookStorePanel';
+import { useSelector} from "react-redux";
+import { DataItem } from "../State/bookStoreInfoSlice"
 
-
-export interface BookStoreListProps {
-    data : object[],
-    included : object[]
-}
 const styles = createUseStyles({
     Outer : {
-        height : "100vh",
+        minWidth : "600px",
         width : "80vw",
-        backgroundColor : "red",
-        display : "flex",
+        backgroundColor : "tan",
+        height : "100vh",
+        display: "-webkit-box",
+        overflow : "scroll",
+
+        alignItems : "center",
+        justifyContent : "center",
+        "-webkit-box-orient" : "vertical",
+
+    },
+    Inner : {
+        display : 'flex',
         flexDirection : "column",
+        justifyContent : "center",
         alignItems : "center"
     }
   });
 
 
-const BookStoreList = ({data, included} : BookStoreListProps) => {
+const BookStoreList = () => {
     const classes = styles()
-    useEffect(() => {
+    const {info} = useSelector((state : any) => state.bookStoreInfo)
 
-    }, [])
     return (
         <div className={classes.Outer}>
-            {data.map((thing : object, index : number ) => {
-                return (<BookStorePanel key={index}></BookStorePanel>)
-            })}
+            <div className={classes.Inner}>
+                {info.stores.map((thing : DataItem, index : number ) => {
+                    return (
+                        <BookStorePanel 
+                            key={index}
+                            index={index} 
+                        />                )
+                })}
+                
+            </div>
+            
         </div>
     )
 }
