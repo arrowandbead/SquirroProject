@@ -8,7 +8,7 @@ const styles = createUseStyles({
     Outer : {
         minWidth : "600px",
         width : "80vw",
-        backgroundColor : "tan",
+        backgroundColor : "#D3D3D3",
         height : "100vh",
         display: "-webkit-box",
         overflow : "scroll",
