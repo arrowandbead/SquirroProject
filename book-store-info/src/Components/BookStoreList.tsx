@@ -5,20 +5,22 @@ import { useSelector} from "react-redux";
 import { DataItem } from "../State/bookStoreInfoSlice"
 
 const styles = createUseStyles({
-    Outer : {
+    ScrollDiv : {
+        display: "-webkit-box",
+        overflow : "scroll",
+        "-webkit-box-orient" : "vertical",
+    },
+    Inner : {
         minWidth : "600px",
         width : "80vw",
         backgroundColor : "#D3D3D3",
         height : "100vh",
-        display: "-webkit-box",
-        overflow : "scroll",
-
-        alignItems : "center",
+        display : 'flex',
+        flexDirection : "column",
         justifyContent : "center",
-        "-webkit-box-orient" : "vertical",
-
+        alignItems : "center"
     },
-    Inner : {
+    Outer : {
         display : 'flex',
         flexDirection : "column",
         justifyContent : "center",
@@ -34,13 +36,15 @@ const BookStoreList = () => {
     return (
         <div className={classes.Outer}>
             <div className={classes.Inner}>
-                {info.stores.map((thing : DataItem, index : number ) => {
-                    return (
-                        <BookStorePanel 
-                            key={index}
-                            index={index} 
-                        />                )
-                })}
+                <div className={classes.ScrollDiv}>
+                    {info.stores.map((thing : DataItem, index : number ) => {
+                        return (
+                            <BookStorePanel 
+                                key={index}
+                                index={index} 
+                            />                )
+                    })}
+                </div>
                 
             </div>
             
