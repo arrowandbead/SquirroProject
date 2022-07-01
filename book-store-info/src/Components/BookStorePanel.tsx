@@ -16,7 +16,6 @@ const styles = createUseStyles({
         minHeight : "250px",
         minWidth : "600px",
         width : "70vw",
-        backgroundColor : "lightgreen",
         margin : "1vh",
         display : "flex",
         
@@ -39,7 +38,6 @@ const styles = createUseStyles({
         width : "90%",
         border: 'solid rgba(0, 0, 0, 1)', 
         borderWidth : "2px 2px 0 2px",
-        backgrounColor : "red"
     },
     BottomSection : {
         backgroundColor : "lightblue",
@@ -61,7 +59,6 @@ const styles = createUseStyles({
         justifyContent : "center",
     },
     InfoBodySection : {
-        backgroundColor : "yellow",
         display : "flex",
         height : "100%",
         minWidth : "70%",
@@ -116,7 +113,7 @@ const styles = createUseStyles({
         width : "100%",
         display : "flex",
         flexDirection : "row",
-        backgroundColor : "red",
+        backgroundColor : "tan"
     },
     InfoBodyTopLeftSection : {
         height : "100%",
@@ -124,9 +121,8 @@ const styles = createUseStyles({
         display : "flex",
         justifyContent : "left",
         alignItems : "center",
-        backgroundColor : "grey",
         border: 'solid rgba(0, 0, 0, 1)', 
-        borderWidth : "0 2px 0 2px",
+        borderWidth : "0 0 0 2px",
     },
     InfoBodyTopRightSection : {
         height : "100%",
@@ -134,7 +130,6 @@ const styles = createUseStyles({
         display : "flex",
         justifyContent : "right",
         alignItems : "center",
-        backgroundColor : "white"
         
     },
     BottomSectionLeft : {
@@ -178,6 +173,7 @@ const styles = createUseStyles({
     BookInfoHeaderSection : {
         display : "flex",
         alignItems : "center",
+        justifyContent : "center",
         maxHeight : "40%",
         flex : 1,
         border: 'solid rgba(0, 0, 0, 1)', 
