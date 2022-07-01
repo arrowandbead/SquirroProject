@@ -83,7 +83,7 @@ const findTwoBiggest  = <Type>(inputList : Type[], compareFunc : (arg1 : Type, a
 export const getBookStoreInfo = createAsyncThunk(
     'bookStoreInfo/getBookStoreInfo',
     async () => {
-    const res : BookStoreInfoState = await fetch(process.env.REACT_APP_REQUEST_BASE_URL! + process.env.REACT_APP_PORT! + '/stores').then( (data) => 
+    const res : BookStoreInfoState = await fetch(process.env.REACT_APP_REQUEST_BASE_URL! + process.env.REACT_APP_API_PORT! + '/stores').then( (data) => 
         data.json()
     ).then( (jsonData) => {
 

@@ -1,10 +1,11 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
-import { useSelector} from "react-redux";
+import { useSelector, useDispatch} from "react-redux";
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import { BookItem } from '../State/bookStoreInfoSlice';
-import { cardContentClasses } from '@mui/material';
+import { BookItem, setBookStoreInfo } from '../State/bookStoreInfoSlice';
+import {AppDispatch} from "../State/store"
+
 
 interface BookStorePanelInterFace {
     index : number
@@ -12,6 +13,7 @@ interface BookStorePanelInterFace {
 const styles = createUseStyles({
     Outer : {
         height : "30vh",
+        minHeight : "250px",
         minWidth : "600px",
         width : "70vw",
         backgroundColor : "lightgreen",
@@ -64,17 +66,26 @@ const styles = createUseStyles({
         height : "100%",
         minWidth : "70%",
         flexDirection : "column",
-        // border: 'solid rgba(0, 0, 0, 1)', 
-        // borderWidth : "0 2px 0 0",
         
     },
+    PicHolderHolderHolder : {
+        height : "100%",
+        width : "100%"
+    },
+    PicHolderHolder : {
+        display : "inline-block",
+        height : "100%",
+
+    },
     PicHolder : {
-        height : "80%",
+        height : "100%",
         width : "80%",
+        
         objectFit : "contain",
         display : "flex",
-        alignItems : "center",
-        justifyContent : "center"
+        borderRadius : "50%",
+        position: "relative",
+        overflow: "hidden"
         
     },
     FlagPicHolder : {
@@ -83,6 +94,20 @@ const styles = createUseStyles({
         objectFit : "contain"
     },
     Pic : {
+        minWidth : "100px",
+        minHeight : "100px",
+        width: "auto",
+        height: "auto",
+        position: "absolute",
+        left: "50%",
+        top: "50%",
+        "-webkit-transform" : "translate(-50%, -50%)",
+        "-moz-transform" : "translate(-50%, -50%)",
+        "-ms-transform" : "translate(-50%, -50%)",
+        "transform" : "translate(-50%, -50%)"
+
+    },
+    FlagPic : {
         maxHeight : "100%",
         maxWidth : "100%"
     },
@@ -148,11 +173,9 @@ const styles = createUseStyles({
         backgroundColor : "white",
         display : "flex",
         flexDirection : "column",
-        // borderWidth : "0 0 0 2px",
-        // border: 'solid rgba(0, 0, 0, 1)',
+
     },
     BookInfoHeaderSection : {
-        // width : "100%",
         display : "flex",
         alignItems : "center",
         maxHeight : "40%",
@@ -160,9 +183,6 @@ const styles = createUseStyles({
         border: 'solid rgba(0, 0, 0, 1)', 
         borderWidth : "2px 0 2px 2px",
         fontSize : "1.2em"
-        // paddingLeft : "5px"
-
-
     },
     BookInfoBookRow : {
         display : "flex",
@@ -221,29 +241,38 @@ function BookStorePanel({index} : BookStorePanelInterFace) {
     const formattedDate = String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2,'0') + '/' + String(date.getFullYear())
     const dateWebsiteFeatureContent = formattedDate +  " - " + store.attributes.website
 
+    const dispatch = useDispatch<AppDispatch>()
+
     const starChange = (newNumStars : number ) => {
-        const url = process.env.REACT_APP_REQUEST_BASE_URL! + process.env.REACT_APP_PORT! + '/stores/data'
-        // /data/' + (index + 1) + '/attributes'
+        const url = process.env.REACT_APP_REQUEST_BASE_URL! + process.env.REACT_APP_API_PORT! + '/stores/' + (index + 1)
+        const infoCopy = structuredClone(info)
+        
+        infoCopy.stores[index].attributes.rating = newNumStars
+        
+        dispatch(setBookStoreInfo(infoCopy))
         const reqBody = {
-            "data": {
-                "type" : "store",
-                "id" : storeID,
-                "attributes" : {
-                    "rating": newNumStars
-                }
+            data : {
+                type : "store",
+                id : storeID,
                 
+                attributes : {
+                    rating : newNumStars
+                }
             }
         }
+                
+
+        
         fetch(url, {
             method : "PATCH",
             headers : {
-                "Content-Type" : "application/json",
+                "Content-Type" : "application/vnd.api+json",
                 "X-HTTP-Method-Override" : "PATCH",
             },
             body : JSON.stringify(reqBody)
         })
         .then( (r) => r.json() )
-        .then( (j) => console.log(j))
+        .catch( error => console.log(error))
 
     }
     return (
@@ -251,10 +280,10 @@ function BookStorePanel({index} : BookStorePanelInterFace) {
         <div className={classes.OuterPad}>
             <div className={classes.TopSection}>
                 <div className={classes.PictureSection}>
-                    <div className={classes.PicHolder}>
-                        <img alt="book store " className={classes.Pic} src={store.attributes.storeImage}>
-                        </img>
-                    </div>
+                            <div className={classes.PicHolder}>
+                                <img alt="book store " className={classes.Pic} src={store.attributes.storeImage}/>
+                            </div>
+                     
                 </div>
                 <div className={classes.InfoBodySection}>
                     <div className={classes.InfoBodyTopSection}>
@@ -264,7 +293,7 @@ function BookStorePanel({index} : BookStorePanelInterFace) {
                                 store.attributes.rating >= num ? 
                                 <StarIcon 
                                 key = {num}
-                                onClick={() => console.log(num, index )}/>
+                                onClick={() => starChange(num)}/>
                                 :
                                 <StarBorderIcon 
                                     key={num}
@@ -314,7 +343,7 @@ function BookStorePanel({index} : BookStorePanelInterFace) {
                 </div>
                 <div className={classes.BottomSectionRight}>
                     <div className={classes.FlagPicHolder}>
-                        <img  alt={"Flag of " + countryCode} src={flagImageURL} className={classes.Pic} />
+                        <img  alt={"Flag of " + countryCode} src={flagImageURL} className={classes.FlagPic} />
 
                     </div>
                 </div>

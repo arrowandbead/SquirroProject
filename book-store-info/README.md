@@ -2,45 +2,16 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Starting
+Download the directory and run npm install in both the book-store-api folder and the book-store-info folder.
 
-In the project directory, you can run:
+In the command line, go to the book-store-api folder and run npm start there. It will begin the backend on Port 3000.
+In the command line, go to the book-store-info folder and run npm start there. Hit y if it asks you if you would like to keep laucnhing on a different port. This will happen if 3001 isn't open.
+View the website on localhost:3001 (or whatever port it started the front end on after you hit y.)
 
-### `npm start`
+## Notes
+To manage state I used redux toolkit. In the slice file I make maps from the ids of the included objext to all the included objects. I also pre calculate the top two books for each store. Each BookStorePanel knows its index within the state and I avoid passing parameters through the app -> bookstorelist -> bookstorepanel this way.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Try resizing it works just about perfectly on everything except I would say the store image. I was spending too much time on that part and thought it best to submit. 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+I used mui icons which I judged to not be under the mui restrictions laid out in the description (that seemed more about css).
